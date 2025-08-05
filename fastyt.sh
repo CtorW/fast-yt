@@ -129,6 +129,7 @@ done
 
 # GETTING READY🔗
 # AUTO yt-dlp DOWNLOADER 😲
+if ! command -v yt-dlp &> /dev/null; then
     echo "${BICyan}'yt-dlp' is not found. Would you like to try and install it? (y/n)${Color_Off}"
     read -r answer
     if [ "$answer" != "${answer#[Yy]}" ] ;then
@@ -156,7 +157,7 @@ done
                 exit 1
                 fi
             fi
- 		fi
+ 	fi
             
 # URL CHECKING SECTION
 if [ -z "$VIDEO_URL" ]; then
