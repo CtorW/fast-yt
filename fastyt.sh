@@ -158,6 +158,7 @@ if ! command -v yt-dlp &> /dev/null; then
                 fi
             fi
  	fi
+  fi
             
 # URL CHECKING SECTION
 if [ -z "$VIDEO_URL" ]; then
