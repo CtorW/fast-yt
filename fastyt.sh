@@ -154,11 +154,44 @@ if ! command -v yt-dlp &> /dev/null; then
     		"
                 echo "${Red}Could not find a supported package manager (apt, dnf, pacman).${Color_Off}"
                 echo "${Red}Please install 'yt-dlp' manually.${Color_Off}"
-                exit 1
+              fi
+        elif [[ "$OSTYPE" == "darwin"* ]]; then
+            if ! command -v brew &> /dev/null; then
+                echo "${BICyan}Homebrew is not installed. It is required to install 'yt-dlp' on macOS.${Color_Off}"
+                echo "${BICyan}Would you like to install Homebrew now? (y/n)${Color_Off}"
+                read -r brew_answer
+                if [ "$brew_answer" != "${brew_answer#[Yy]}" ] ;then
+                    echo "Attempting to install Homebrew..."
+                    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+                    if [ $? -eq 0 ]; then
+                        echo "Homebrew installed successfully."
+                        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+                        eval "$(/opt/homebrew/bin/brew shellenv)"
+                    else
+                        echo "Failed to install Homebrew. Please install it manually and try again."
+                        exit 1
+                    fi
+                else
+                    echo "Homebrew not installed. Cannot proceed with 'yt-dlp' installation."
+                    exit 1
                 fi
             fi
- 	fi
-  fi
+            echo "Installing 'yt-dlp' using Homebrew..."
+            brew install yt-dlp
+            if [ $? -eq 0 ]; then
+                echo "'yt-dlp' installed successfully via Homebrew."
+            else
+                echo "Failed to install 'yt-dlp' via Homebrew. Please check for errors."
+            fi
+        else
+            echo "Unsupported operating system: $OSTYPE. Please install 'yt-dlp' manually."
+        fi
+    else
+        echo "Skipping 'yt-dlp' installation."
+    fi
+else
+    echo "'yt-dlp' is already installed."
+fi
             
 # URL CHECKING SECTION
 if [ -z "$VIDEO_URL" ]; then
