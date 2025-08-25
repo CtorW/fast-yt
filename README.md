@@ -9,7 +9,7 @@
 > ```bash
 >  git clone https://github.com/CtorW/fast-yt
 >  cd fast-yt
->  chmod +x fastyt.sh
+>  ./fastyt.sh
 > ```
 > ❓️ How to Use
 > ```bash
